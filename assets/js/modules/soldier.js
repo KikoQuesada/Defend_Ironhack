@@ -111,9 +111,9 @@ class Soldier {
 
     animate() {
         if(this.movement.right) {
-            this.animateSprite(2, 0, 4, 10);
+            this.animateSprite(2, 0, 4, 7);
         } else if (this.movement.left) {
-            this.animateSprite(3, 0, 4, 10);
+            this.animateSprite(3, 0, 4, 7);
         } else if (!this.canFire){
             this.sprite.verticalFrameIndex = 1;
             this.sprite.horizontalFrameIndex = 0;
