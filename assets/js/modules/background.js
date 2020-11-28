@@ -18,6 +18,10 @@ class Background {
 
     }
 
+    isReady() {
+        return this.img.isReady;
+    }
+
     draw() {
         if(this.img.isReady) {
             this.ctx.drawImage(

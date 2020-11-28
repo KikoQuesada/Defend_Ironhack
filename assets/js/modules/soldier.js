@@ -8,6 +8,7 @@ class Soldier {
         this.vx = 0;
         this.y = y;
         this.maxY = this.ctx.canvas.height;
+        this.changeOrientation = false;
 
         this.sprite = new Image();
         this.sprite.src = './img/soldier-sprite.png';
@@ -30,22 +31,43 @@ class Soldier {
         };
 
         this.drawCount = 0;
+
+        this.canFire = true;
+        this.bullets = [];
+    }
+
+    isReady() {
+        return this.sprite.isReady;
     }
 
     onKeyEvent(event) {
         const state = event.type === 'keydown';
         switch (event.keyCode) {
             case KEY_D:
-                this.sprite.verticalFrameIndex = 2;
                 this.movement.right = state;
+                this.changeOrientation = false;
                 break;
             case KEY_A:
-                this.sprite.verticalFrameIndex = 3;
-                this.sprite.horizontalFrameIndex = 0;
                 this.movement.left = state;
+                this.changeOrientation = true;
+                break;
+            case KEY_SPACE:
+                if(this.canFire) {
+                    if (this.changeOrientation) {
+                        this.bullets.push(new Bullet(this.ctx, this.x - this.width, this.y + 30, this.height));
+                    } else {
+                        this.bullets.push(new Bullet(this.ctx, this.x + this.width, this.y + 30, this.height));
+                    }
+                    this.canFire = false;
+                    setTimeout(() => this.canFire = true, 500);
+                }
                 break;
         }
-    }    
+    }
+    
+    clear() {
+        this.bullets = this.bullets.filter(bullet => bullet.x <= this.ctx.canvas.width);
+    }
 
     draw() {
         if(this.sprite.isReady) {
@@ -60,7 +82,8 @@ class Soldier {
                 this.width,
                 this.height
             );
-
+            
+            this.bullets.forEach(bullet => bullet.draw());
             this.drawCount++;
             this.animate();
         }
@@ -75,7 +98,6 @@ class Soldier {
             this.vx = 0;
             this.vy = 0;
         }
-
         this.x += this.vx;
 
         if(this.x >= this.maxX) {
@@ -83,6 +105,8 @@ class Soldier {
         } else if (this.x <= this.minX) {
             this.x = this.minX;
         }
+
+        this.bullets.forEach(bullet => bullet.move());
     }
 
     animate() {
@@ -90,6 +114,9 @@ class Soldier {
             this.animateSprite(2, 0, 4, 10);
         } else if (this.movement.left) {
             this.animateSprite(3, 0, 4, 10);
+        } else if (!this.canFire){
+            this.sprite.verticalFrameIndex = 1;
+            this.sprite.horizontalFrameIndex = 0;
         } else {
             this.resetAnimation();
         }
@@ -97,11 +124,11 @@ class Soldier {
 
     resetAnimation() {
             this.sprite.horizontalFrameIndex = 0;
-            this.sprite.verticalFrameIndex = 2;
+            this.changeOrientation ? this.sprite.verticalFrameIndex = 3 : this.sprite.verticalFrameIndex = 2;
     }
 
     animateSprite(initialVerticalIndex, initialHorizontalIndex, maxHorizontalIndex, frequency) {
-        if (this.sprite.verticalFrameIndex != initialVerticalIndex) {
+        if (this.sprite.verticalFrameIndex !== initialVerticalIndex) {
             this.sprite.verticalFrameIndex = initialVerticalIndex;
             this.sprite.horizontalFrameIndex = initialHorizontalIndex;
         } else if (this.drawCount % frequency === 0) {
