@@ -8,7 +8,7 @@ class Soldier {
         this.vx = 0;
         this.y = y;
         this.maxY = this.ctx.canvas.height;
-        this.changeOrientation = false;
+        this.isLookingToRight = true;
 
         this.sprite = new Image();
         this.sprite.src = './img/soldier-sprite.png';
@@ -44,22 +44,23 @@ class Soldier {
         const state = event.type === 'keydown';
         switch (event.keyCode) {
             case KEY_D:
+                this.isLookingToRight = true;
                 this.movement.right = state;
-                this.changeOrientation = false;
                 break;
             case KEY_A:
+                this.isLookingToRight = false;
                 this.movement.left = state;
-                this.changeOrientation = true;
                 break;
             case KEY_SPACE:
-                if(this.canFire) {
-                    if (this.changeOrientation) {
-                        this.bullets.push(new Bullet(this.ctx, this.x - this.width, this.y + 30, this.height));
+                if(this.canFire && event.type === 'keydown') {
+                    this.resetAnimation();
+                    if (this.isLookingToRight) {
+                        this.bullets.push(new Bullet(this.ctx, this.x + this.width, this.y + 30, true));
                     } else {
-                        this.bullets.push(new Bullet(this.ctx, this.x + this.width, this.y + 30, this.height));
+                        this.bullets.push(new Bullet(this.ctx, this.x - this.width, this.y + 30, false));
                     }
                     this.canFire = false;
-                    setTimeout(() => this.canFire = true, 500);
+                    setTimeout(() => this.canFire = true, 600);
                 }
                 break;
         }
@@ -71,18 +72,31 @@ class Soldier {
 
     draw() {
         if(this.sprite.isReady) {
-            this.ctx.drawImage(
-                this.sprite,
-                this.sprite.frameWidth * this.sprite.horizontalFrameIndex,
-                this.sprite.frameHeight * this.sprite.verticalFrameIndex,
-                this.sprite.frameWidth,
-                this.sprite.frameHeight,
-                this.x,
-                this.y,
-                this.width,
-                this.height
-            );
-            
+            if(!this.canFire) {
+                this.ctx.drawImage(
+                    this.sprite,
+                    this.sprite.frameWidth * this.sprite.horizontalFrameIndex,
+                    this.sprite.frameHeight * this.sprite.verticalFrameIndex,
+                    this.sprite.frameWidth + FIRE_WIDTH,
+                    this.sprite.frameHeight,
+                    this.x,
+                    this.y,
+                    this.width + FIRE_WIDTH,
+                    this.height
+                );
+            } else {
+                this.ctx.drawImage(
+                    this.sprite,
+                    this.sprite.frameWidth * this.sprite.horizontalFrameIndex,
+                    this.sprite.frameHeight * this.sprite.verticalFrameIndex,
+                    this.sprite.frameWidth,
+                    this.sprite.frameHeight,
+                    this.x,
+                    this.y,
+                    this.width,
+                    this.height
+                );
+            } 
             this.bullets.forEach(bullet => bullet.draw());
             this.drawCount++;
             this.animate();
@@ -90,12 +104,16 @@ class Soldier {
     }
 
     move() {
-        if(this.movement.right) {
+
+        if (!this.canFire) {
+            this.vx = 0;
+        }
+        else if (this.movement.right) {
             this.vx = SPEED;
         } else if (this.movement.left) {
             this.vx = -SPEED;
         } else {
-            this.vx = 0;
+            this.vx = 0; 
             this.vy = 0;
         }
         this.x += this.vx;
@@ -109,14 +127,21 @@ class Soldier {
         this.bullets.forEach(bullet => bullet.move());
     }
 
+
+
     animate() {
-        if(this.movement.right) {
-            this.animateSprite(2, 0, 4, 7);
+        if(!this.canFire) {
+            if(this.isLookingToRight) {
+                this.sprite.verticalFrameIndex = 1;
+                this.sprite.horizontalFrameIndex = 0;
+            } else {
+                this.sprite.verticalFrameIndex = 0;
+                this.sprite.horizontalFrameIndex = 0;  
+            }
+        } else if (this.movement.right) {
+            this.animateSprite(2, 0, 4, 5);
         } else if (this.movement.left) {
-            this.animateSprite(3, 0, 4, 7);
-        } else if (!this.canFire){
-            this.sprite.verticalFrameIndex = 1;
-            this.sprite.horizontalFrameIndex = 0;
+            this.animateSprite(3, 0, 4, 5);
         } else {
             this.resetAnimation();
         }
@@ -124,7 +149,7 @@ class Soldier {
 
     resetAnimation() {
             this.sprite.horizontalFrameIndex = 0;
-            this.changeOrientation ? this.sprite.verticalFrameIndex = 3 : this.sprite.verticalFrameIndex = 2;
+            this.isLookingToRight ? this.sprite.verticalFrameIndex = 2 : this.sprite.verticalFrameIndex = 3;
     }
 
     animateSprite(initialVerticalIndex, initialHorizontalIndex, maxHorizontalIndex, frequency) {

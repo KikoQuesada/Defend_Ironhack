@@ -1,11 +1,12 @@
 class Bullet {
 
-    constructor(ctx, x, y, orientation) {
+    constructor(ctx, x, y, right) {
         this.ctx = ctx;
         this.x = x;
         this.vx = BULLET_SPEED;
         this.y = y;
-        this.orientation = false;
+        this.right = right;
+        
 
         this.sprite = new Image();
         this.sprite.src = './img/bullet-sprite.png';
@@ -28,6 +29,6 @@ class Bullet {
     }
 
     move() {
-        this.orientation ? this.x -= this.vx : this.x += this.vx;
+        this.x += this.right ? this.vx : -this.vx;
     }
 }

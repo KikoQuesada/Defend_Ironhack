@@ -5,3 +5,4 @@ const KEY_W = 87;
 const KEY_SPACE = 32;
 const SPEED = 3;
 const BULLET_SPEED = 10;
+const FIRE_WIDTH = 90;
