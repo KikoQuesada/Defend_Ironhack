@@ -52,12 +52,12 @@ class Soldier {
                 this.movement.left = state;
                 break;
             case KEY_SPACE:
-                if(this.canFire && event.type === 'keydown') {
-                    this.resetAnimation();
+                if (this.canFire && event.type === 'keydown') {
+                    this.animateFire();  
                     if (this.isLookingToRight) {
-                        this.bullets.push(new Bullet(this.ctx, this.x + this.width, this.y + 30, true));
+                    this.bullets.push(new Bullet(this.ctx, this.x + this.width, this.y + 30, true));
                     } else {
-                        this.bullets.push(new Bullet(this.ctx, this.x - this.width, this.y + 30, false));
+                    this.bullets.push(new Bullet(this.ctx, this.x - this.width, this.y + 30, false));
                     }
                     this.canFire = false;
                     setTimeout(() => this.canFire = true, 600);
@@ -127,29 +127,31 @@ class Soldier {
         this.bullets.forEach(bullet => bullet.move());
     }
 
-
-
     animate() {
-        if(!this.canFire) {
-            if(this.isLookingToRight) {
-                this.sprite.verticalFrameIndex = 1;
-                this.sprite.horizontalFrameIndex = 0;
-            } else {
-                this.sprite.verticalFrameIndex = 0;
-                this.sprite.horizontalFrameIndex = 0;  
-            }
+        if (!this.canFire) {
+          this.animateFire();
         } else if (this.movement.right) {
-            this.animateSprite(2, 0, 4, 5);
+          this.animateSprite(2, 0, 4, 5);
         } else if (this.movement.left) {
-            this.animateSprite(3, 0, 4, 5);
+          this.animateSprite(3, 0, 4, 5);
         } else {
-            this.resetAnimation();
+          this.resetAnimation();
         }
-    }
+      }
+
+      animateFire() {
+        if (this.isLookingToRight) {
+          this.sprite.verticalFrameIndex = 1;
+          this.sprite.horizontalFrameIndex = 0;
+        } else {
+          this.sprite.verticalFrameIndex = 0;
+          this.sprite.horizontalFrameIndex = 0;
+        }
+      }
 
     resetAnimation() {
             this.sprite.horizontalFrameIndex = 0;
-            this.isLookingToRight ? this.sprite.verticalFrameIndex = 2 : this.sprite.verticalFrameIndex = 3;
+            this.verticalFrameIndex = this.isLookingToRight ? 2 : 3;
     }
 
     animateSprite(initialVerticalIndex, initialHorizontalIndex, maxHorizontalIndex, frequency) {
