@@ -10,7 +10,7 @@ class ZombieA {
         this.sprite.src = './img/zombieA-sprite-right.png';
         this.sprite.isReady = false;
         this.sprite.horizontalFrames = 3;
-        this.sprite.verticalFrames = 1;
+        this.sprite.verticalFrames = 2;
         this.sprite.horizontalFrameIndex = 0;
         this.sprite.verticalFrameIndex = 0;
         this.sprite.onload = () => {
@@ -64,6 +64,18 @@ class ZombieA {
             this.drawCount = 0;
         }
     }
+
+    deadAnimate(initialVerticalIndex, initialHorizontalIndex, maxHorizontalIndex, frequency) {
+        if (this.sprite.verticalFrameIndex !== initialVerticalIndex) {
+            this.sprite.verticalFrameIndex = initialVerticalIndex;
+            this.sprite.horizontalFrameIndex = initialHorizontalIndex;
+        } else if (this.drawCount % frequency === 0) {
+            this.sprite.horizontalFrameIndex = (this.sprite.horizontalFrameIndex + 1) % maxHorizontalIndex;
+            this.drawCount = 0;
+        }
+    }
+
+    
 
     collidesWith(element) {
         return this.x < element.x + element.width && 

@@ -20,6 +20,8 @@ class Game {
         
 
         this.drawCount = 0;
+        this.survivors = 100;
+        
 
     }
 
@@ -29,7 +31,7 @@ class Game {
 
     addRandomZombieA() {
         if(++this.drawCount % Math.floor((Math.random() * 1000)) === 0) {
-            const zombie = new ZombieA(this.ctx, -147, 475);
+            const zombie = new ZombieA(this.ctx, -147, 480);
             this.zombies.push(zombie);
             this.drawCount = 0;
         }
@@ -62,7 +64,7 @@ class Game {
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        // this.zombies = this.zombies.filter(zombie => )
+
     }
 
     stop() {
@@ -80,6 +82,11 @@ class Game {
         this.background.draw();
         this.zombies.forEach(zombie => zombie.draw());
         this.soldier.draw();
+
+        this.ctx.save();
+        this.ctx.font = '20px, Arial';
+        this.ctx.fillText(this.survivors, 100, 40);
+        this.ctx.restore();
     }
     
     checkCollisions() {
@@ -88,9 +95,10 @@ class Game {
             for (let j = 0; j < this.soldier.bullets.length; j++) {
                 let bullet = this.soldier.bullets[j];
                 if (zombie.collidesWith(bullet)) {
-                   this.zombies.splice(i, 1);
-                   this.soldier.bullets.splice(j, 1);
-                   break;
+                    zombie.deadAnimate(1, 0, 3, 20);
+                    setTimeout(() => this.zombies.splice(i, 1), 3000);
+                    this.soldier.bullets.splice(j, 1);
+                    break;
                 }
             }
         }

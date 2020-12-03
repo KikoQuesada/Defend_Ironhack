@@ -151,7 +151,11 @@ class Soldier {
 
     resetAnimation() {
             this.sprite.horizontalFrameIndex = 0;
-            this.verticalFrameIndex = this.isLookingToRight ? 2 : 3;
+            if (this.isLookingToRight) {
+                this.sprite.verticalFrameIndex = 2;
+            } else {
+                this.sprite.verticalFrameIndex = 3;
+            }
     }
 
     animateSprite(initialVerticalIndex, initialHorizontalIndex, maxHorizontalIndex, frequency) {
