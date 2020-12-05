@@ -9,7 +9,7 @@ class Bullet {
         
 
         this.sprite = new Image();
-        this.sprite.src = './img/bullet-sprite.png';
+        this.sprite.src = 'assets/img/bullet-sprite.png';
         this.sprite.isReady = false;
         this.sprite.onload = () => {
             this.sprite.isReady = true;
