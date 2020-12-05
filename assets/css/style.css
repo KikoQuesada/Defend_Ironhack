@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'zombies';
+    src: url('../fonts/zombies_reborn-webfont.woff2') format('woff2'),
+         url('../fonts/zombies_reborn-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 html, body {
     margin: 0;
     padding: 0;

@@ -6,11 +6,13 @@ class ZombieB {
         this.vx = 1;
         this.y = y;
 
+        this.isDying = false;
+
         this.sprite = new Image();
         this.sprite.src = './img/zombie-sprite-left.png';
         this.sprite.isReady = false;
         this.sprite.horizontalFrames = 3;
-        this.sprite.verticalFrames = 1;
+        this.sprite.verticalFrames = 2;
         this.sprite.horizontalFrameIndex = 0;
         this.sprite.verticalFrameIndex = 0;
         this.sprite.onload = () => {
@@ -52,7 +54,11 @@ class ZombieB {
     }
 
     animate() {
-        this.animateSprite(0, 0, 3, 20);
+        if(this.isDying) {
+            this.animateSprite(1, 0, 3, 20);
+        } else {
+            this.animateSprite(0, 0, 3, 20);
+        }
     }
 
     animateSprite(initialVerticalIndex, initialHorizontalIndex, maxHorizontalIndex, frequency) {

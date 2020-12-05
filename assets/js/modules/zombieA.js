@@ -6,6 +6,9 @@ class ZombieA {
         this.vx = 1;
         this.y = y;
 
+        this.isDying = false;
+        
+
         this.sprite = new Image();
         this.sprite.src = './img/zombieA-sprite-right.png';
         this.sprite.isReady = false;
@@ -52,7 +55,11 @@ class ZombieA {
     }
 
     animate() {
-        this.animateSprite(0, 0, 3, 20);
+        if(this.isDying) {
+            this.animateSprite(1, 0, 3, 20);
+        } else {
+            this.animateSprite(0, 0, 3, 20);
+        }
     }
 
     animateSprite(initialVerticalIndex, initialHorizontalIndex, maxHorizontalIndex, frequency) {
@@ -64,18 +71,6 @@ class ZombieA {
             this.drawCount = 0;
         }
     }
-
-    deadAnimate(initialVerticalIndex, initialHorizontalIndex, maxHorizontalIndex, frequency) {
-        if (this.sprite.verticalFrameIndex !== initialVerticalIndex) {
-            this.sprite.verticalFrameIndex = initialVerticalIndex;
-            this.sprite.horizontalFrameIndex = initialHorizontalIndex;
-        } else if (this.drawCount % frequency === 0) {
-            this.sprite.horizontalFrameIndex = (this.sprite.horizontalFrameIndex + 1) % maxHorizontalIndex;
-            this.drawCount = 0;
-        }
-    }
-
-    
 
     collidesWith(element) {
         return this.x < element.x + element.width && 
