@@ -10,7 +10,7 @@ class ZombieA {
         
 
         this.sprite = new Image();
-        this.sprite.src = './img/zombieA-sprite-right.png';
+        this.sprite.src = 'assets/img/zombieA-sprite-right.png';
         this.sprite.isReady = false;
         this.sprite.horizontalFrames = 3;
         this.sprite.verticalFrames = 2;

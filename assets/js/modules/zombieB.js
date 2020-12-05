@@ -9,7 +9,7 @@ class ZombieB {
         this.isDying = false;
 
         this.sprite = new Image();
-        this.sprite.src = './img/zombie-sprite-left.png';
+        this.sprite.src = 'assets/img/zombie-sprite-left.png';
         this.sprite.isReady = false;
         this.sprite.horizontalFrames = 3;
         this.sprite.verticalFrames = 2;

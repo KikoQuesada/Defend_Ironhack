@@ -6,7 +6,7 @@ class Background {
         this.y = 0;
 
         this.img = new Image();
-        this.img.src = './img/Background.jpg';
+        this.img.src = 'assets/img/Background.jpg';
         this.img.isReady = false;
         this.img.onload = () => {
             this.img.isReady = true;

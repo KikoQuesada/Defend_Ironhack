@@ -11,7 +11,7 @@ class Soldier {
         this.isLookingToRight = true;
 
         this.sprite = new Image();
-        this.sprite.src = './img/soldier-sprite.png';
+        this.sprite.src = 'assets/img/soldier-sprite.png';
         this.sprite.isReady = false;
         this.sprite.horizontalFrames = 4;
         this.sprite.verticalFrames = 4;

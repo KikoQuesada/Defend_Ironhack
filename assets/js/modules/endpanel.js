@@ -5,7 +5,7 @@ class Endpanel {
         this.y = y;
 
         this.img = new Image();
-        this.img.src = 'img/end-game.png';
+        this.img.src = 'assets/img/end-game.png';
         this.img.isReady = false;
         this.img.onload = () => {
             this.img.isReady = true;
