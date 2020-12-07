@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+document.getElementById('startButton').addEventListener('click', () => {
     const game = new Game('game-canvas');
     game.start();
 

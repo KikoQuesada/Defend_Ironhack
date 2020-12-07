@@ -20,7 +20,7 @@ class Game {
         
         this.deadEnemies = 0;
         this.drawCount = 0;
-        this.survivors = 1;
+        this.survivors = 100;
         
 
     }

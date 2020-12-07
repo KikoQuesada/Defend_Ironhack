@@ -11,6 +11,37 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-image: url(../img/Inicio.png);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#startButton {
+    padding: 10px 25px 10px 25px;
+    background-color: white;
+    color: red;
+    font-family: 'zombies';
+    font-size: 50px;
+    border-radius: 10px;
+}
+
+#startButton:hover {
+    color: white;
+    background-color: red;
+    border: red;
 }
 
 canvas {
