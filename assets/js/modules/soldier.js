@@ -32,6 +32,9 @@ class Soldier {
 
         this.drawCount = 0;
 
+        this.shoot = new Audio('./assets/sounds/shoot.wav');
+
+
         this.canFire = true;
         this.bullets = [];
     }
@@ -52,6 +55,7 @@ class Soldier {
                 this.movement.left = state;
                 break;
             case KEY_SPACE:
+                this.shoot.play();
                 if (this.canFire && event.type === 'keydown') {
                     this.animateFire();  
                     if (this.isLookingToRight) {

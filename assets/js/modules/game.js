@@ -16,13 +16,12 @@ class Game {
 
         this.zombies = [
         ];
-
         
         this.deadEnemies = 0;
         this.drawCount = 0;
-        this.survivors = 100;
-        
+        this.survivors = 20;
 
+        this.mainAudio = new Audio('./assets/sounds/zombie-moan.wav');
     }
 
     onKeyEvent(event) {
@@ -43,12 +42,12 @@ class Game {
             this.zombies.push(zombie);
             this.drawCount = 0;
         }
-
     }
 
     start() {
         if (!this.drawIntervalId) {
             this.drawIntervalId = setInterval(() => {
+                this.mainAudio.play();
                 this.clear();
                 this.move();
                 this.draw();
@@ -60,13 +59,10 @@ class Game {
                 
             }, this.fps);
         }
-
-        
     }
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     }
 
     stop() {

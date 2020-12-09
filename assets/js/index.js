@@ -1,5 +1,7 @@
+const game = new Game('game-canvas');
+
 document.getElementById('startButton').addEventListener('click', () => {
-    const game = new Game('game-canvas');
+    document.getElementById('startButton').style.display = 'none';
     game.start();
 
     document.addEventListener('keydown', (event) => {

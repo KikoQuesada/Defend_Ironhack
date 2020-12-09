@@ -11,25 +11,24 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .container {
+    padding: 100px;
+
     background-image: url(../img/Inicio.png);
-    background-attachment: fixed;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
+    z-index: 1;
 }
 
 #startButton {
+    margin-left: 700px;
     padding: 10px 25px 10px 25px;
     background-color: white;
     color: red;
@@ -41,7 +40,6 @@ html, body {
 #startButton:hover {
     color: white;
     background-color: red;
-    border: red;
 }
 
 canvas {
@@ -50,9 +48,9 @@ canvas {
     display: block;
     width: 1400px;
     height: 700px;
-    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: -1;
 }
